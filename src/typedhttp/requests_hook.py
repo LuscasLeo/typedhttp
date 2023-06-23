@@ -6,7 +6,7 @@ from typing import (
 
 import requests
 
-from typedhttp import HTTPHandler, HTTPRequestObject, ResponseProvider
+from typedhttp import HTTPHandler, HTTPRequestObject, ResponseProvider, T
 
 class RequestsResponseProvider(ResponseProvider):
     def __init__(self, response: requests.Response) -> None:
