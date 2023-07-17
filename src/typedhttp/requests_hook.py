@@ -4,7 +4,10 @@ import requests
 
 from typedhttp import HTTPHandler, HTTPRequestObject, ResponseProvider
 
+from typedhttp.exc import NoExceptionProvidedForStatusCode
+
 T = TypeVar("T")
+
 
 class RequestsResponseProvider(ResponseProvider):
     def __init__(self, response: requests.Response) -> None:
@@ -48,18 +51,10 @@ class RequestsHTTPHandler(HTTPHandler):
 
         if response.status_code not in request.success_status_codes:
             if response.status_code in request.error_decoders:
-                try:
-                    exc = request.error_decoders[response.status_code](
-                        response_provider
-                    )
-                except Exception as e:
-                    raise Exception(
-                        f"Error decoding response with status code {response.status_code}: {response.text}"
-                    ) from e
+                request.error_decoders[response.status_code](response_provider)
 
-                raise exc
             else:
-                raise Exception(
+                raise NoExceptionProvidedForStatusCode(
                     f"Request failed with status code {response.status_code} and no error decoder: {response.text}"
                 )
 

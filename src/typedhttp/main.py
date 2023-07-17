@@ -34,6 +34,7 @@ class ResponseProvider(ABC):
 
 
 ResponseDecoder = Callable[[ResponseProvider], T]
+ErrorHandler = Callable[[ResponseProvider], None]
 
 
 @dataclass
@@ -44,7 +45,7 @@ class HTTPRequestObject(Generic[T]):
     success_status_codes: List[int] = field(
         default_factory=lambda: [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]
     )
-    error_decoders: Dict[int, ResponseDecoder[Exception]] = field(default_factory=dict)
+    error_decoders: Dict[int, ErrorHandler] = field(default_factory=dict)
     as_stream: bool = False
     headers: Optional[List[Tuple[str, str]]] = None
     body: Optional[bytes] = None
@@ -56,6 +57,7 @@ class HTTPHandler(ABC):
     @abstractmethod
     def send(self, request: HTTPRequestObject[T]) -> T:
         raise NotImplementedError
+
 
 __all__ = [
     "HTTPHandler",
