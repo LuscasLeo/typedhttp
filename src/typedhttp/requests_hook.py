@@ -1,12 +1,10 @@
-from typing import (
-    Iterator,
-    List,
-    Tuple,
-)
+from typing import Iterator, List, Tuple, TypeVar
 
 import requests
 
-from typedhttp import HTTPHandler, HTTPRequestObject, ResponseProvider, T
+from typedhttp import HTTPHandler, HTTPRequestObject, ResponseProvider
+
+T = TypeVar("T")
 
 class RequestsResponseProvider(ResponseProvider):
     def __init__(self, response: requests.Response) -> None:

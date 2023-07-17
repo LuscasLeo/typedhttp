@@ -8,6 +8,7 @@ packages = [{include = "typedhttp", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+requests = {version = "^2.31.0", extras = ["requests"]}
 
 
 [build-system]
