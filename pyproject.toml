@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "typedhttp"
-version = "0.3.0"
+version = "0.4.0"
 description = ""
 authors = ["Lucas Silva <lucas76leonardo@gmail.com>"]
 readme = "README.md"
