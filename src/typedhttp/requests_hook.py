@@ -52,7 +52,8 @@ class RequestsHTTPHandler(HTTPHandler):
         if response.status_code not in request.success_status_codes:
             if response.status_code in request.error_decoders:
                 request.error_decoders[response.status_code](response_provider)
-
+            elif request.unknown_status_code_decoder is not None:
+                request.unknown_status_code_decoder(response_provider)
             else:
                 raise NoExceptionProvidedForStatusCode(
                     f"Request failed with status code {response.status_code} and no error decoder: {response.text}"

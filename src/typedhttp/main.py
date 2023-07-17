@@ -46,11 +46,13 @@ class HTTPRequestObject(Generic[T]):
         default_factory=lambda: [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]
     )
     error_decoders: Dict[int, ErrorHandler] = field(default_factory=dict)
+    unknown_status_code_decoder: Optional[ErrorHandler] = None
     as_stream: bool = False
     headers: Optional[List[Tuple[str, str]]] = None
     body: Optional[bytes] = None
     follow_redirects: bool = True
     basic_auth: Optional[Tuple[str, str]] = None
+    
 
 
 class HTTPHandler(ABC):
